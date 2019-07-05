@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game</title>
+
+</head>
+
+<body>
+    <h1>The Psychic Game</h1>
+
+    <p>Guess what letter I'm thinking of <span id="computerGuess"></span></p>
+
+    <!-- This is where we will have the win counter in HTML. It initially shows 0  -->
+    <p>Wins: <span id="wins">0</span></p>
+
+    <!-- This is where we will have the loss counter in HTML. It initially shows 0 -->
+    <p>Losses: <span id="losses">0</span></p>
+
+    <!-- This is where we will post the guessesLeft. Initially nothing is shown. -->
+    <p>Guesses Left: <span id="remaining_lives"></span></p>
+
+    <!-- This is where we will post the guessesSoFar. Initially nothing is shown. -->
+    <p>Your Guesses so far: <span id="arr"></span></p>
+
+
+    </div>
+    <script>
+
+        let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        //------------Array of given letter-------------//
+        var computerGuess = letters[Math.floor(Math.random() * letters.length)];
+        //------------random letter generator formula------//
+        losses = 0;
+        //----counter when lose---//
+        wins = 0;
+        //----counter when win---//
+        arr = [];
+        //----slack array---//
+        remaining_lives = 9;
+        //-----user's live---//
+        var json_data = {
+            computerGuess: function () {
+
+                return letters[Math.floor(Math.random() * letters.length)];
+            },
+            reset: function () {
+                arr = [];
+                remaining_lives = 9;
+                computerGuess = letters[Math.floor(Math.random() * letters.length)];
+
+            }
+        //-------json data for comp guess and reset function----//
+
+
+
+        }
+        
+        document.onkeyup = function (e) {
+            remaining_lives--;
+            var letter = e.key;
+            console.log(letter)
+            arr.push(letter)
+            document.querySelector("#arr").innerHTML = arr;
+            document.querySelector("#remaining_lives").innerHTML = remaining_lives;
+            if (computerGuess === letter) {
+                wins++;
+                document.querySelector("#wins").innerHTML = wins;
+                json_data.reset()
+                //----winning condition----//
+
+
+
+            }
+            if (remaining_lives === 0) {
+                losses++;
+                json_data.reset()
+                document.querySelector("#losses").innerHTML = losses;
+                computerGuess = json_data.computerGuess()
+                //
+            }
+
+        }
+    </script>
+</body>
+
+</html>
